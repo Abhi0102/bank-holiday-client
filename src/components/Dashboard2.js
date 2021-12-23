@@ -6,7 +6,7 @@ import { dateSelection } from "../helpers/constants";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-function Dashboard(props) {
+function Dashboard2(props) {
   const [selection, setSelection] = useState("");
   const url = "https://www.gov.uk/bank-holidays.json";
   const [apiData, setApiData] = useState("");
@@ -18,17 +18,19 @@ function Dashboard(props) {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        let li = [];
+        let newli = [];
         for (let i in data) {
-          console.log(i);
-          li = [...li, ...data[i]["events"]];
+          newli = [...newli, data[i]];
         }
-        setApiData(li);
-        setDisplayData(li);
+        setApiData(newli);
+        setDisplayData(newli);
       });
   }, []);
 
+  //   console.log(apiData);
+
   //   Handling Drop-down selection
+
   function handleChange(e) {
     console.log(e.target.value);
 
@@ -53,14 +55,22 @@ function Dashboard(props) {
       return;
     }
 
-    // Filtering based on above conditions
-    let newList = apiData.filter((data) => {
-      const holidayDate = new Date(data.date);
-      if (holidayDate >= rangeDate1 && holidayDate <= today) {
-        return data;
+    let newLi = apiData.filter((data) => {
+      const newData = data.events.filter((event) => {
+        const holidayDate = new Date(event.date);
+        if (holidayDate >= rangeDate1 && holidayDate <= today) {
+          return event;
+        }
+      });
+      if (newData.length) {
+        return (data["events"] = newData);
       }
     });
-    setDisplayData(newList);
+
+    console.log(newLi);
+
+    setDisplayData(newLi);
+
     return;
   }
 
@@ -78,13 +88,19 @@ function Dashboard(props) {
     const endDate = new Date(date.endDate);
     console.log(startDate, endDate);
 
-    let newList = apiData.filter((data) => {
-      const holidayDate = new Date(data.date);
-      if (holidayDate >= startDate && holidayDate <= endDate) {
-        return data;
+    let newLi = apiData.filter((data) => {
+      const newData = data.events.filter((event) => {
+        const holidayDate = new Date(event.date);
+        if (holidayDate >= startDate && holidayDate <= endDate) {
+          return event;
+        }
+      });
+      if (newData.length) {
+        return (data["events"] = newData);
       }
     });
-    setDisplayData(newList);
+
+    setDisplayData(newLi);
     return;
   }
 
@@ -94,7 +110,7 @@ function Dashboard(props) {
       <button className="btn btn-danger" onClick={(e) => handleLogOut(e)}>
         Logout
       </button>{" "}
-      <Link to="/dashboard2"> Dahhboard 2</Link>
+      <Link to="/dashboard1"> Dahhboard 1</Link>
       <br />
       <br />
       <select
@@ -120,23 +136,28 @@ function Dashboard(props) {
         </div>
       )}
       {displayData && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {displayData.map((d) => (
-              <tr key={displayData.indexOf(d)}>
-                <td>{d.title}</td>
-                <td>{d.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <>
+          {displayData.map((ele) => (
+            <table className="table" key={ele.division}>
+              <thead>
+                <tr>
+                  <th scope="col">{ele.division}</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ele["events"].map((event) => (
+                  <tr key={ele["events"].indexOf(event)}>
+                    <td></td>
+                    <td>{event.title}</td>
+                    <td>{event.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ))}
+        </>
       )}
     </div>
   );
@@ -148,4 +169,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard2);

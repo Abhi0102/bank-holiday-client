@@ -7,6 +7,7 @@ import { authenticateUser } from "../actions/auth";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "../helpers/PrivateRoute";
 import Home from "./Home";
+import Dashboard2 from "./Dashboard2";
 
 class App extends Component {
   componentDidMount() {
@@ -26,10 +27,19 @@ class App extends Component {
           <Route path="/" element={<Home />}></Route>
 
           <Route
-            path="/dashboard"
+            path="/dashboard1"
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard2"
+            element={
+              <PrivateRoute>
+                <Dashboard2 />
               </PrivateRoute>
             }
           />

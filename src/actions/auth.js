@@ -6,6 +6,7 @@ import {
   SUCCESS_AUTHENTICATE,
   LOG_OUT,
   AUTHENTICATION_PROGRESS,
+  REFRESH_ERROR,
 } from "./actionType";
 import { APIUrls } from "../helpers/url";
 import { headerWithoutAuth, headerWithAuth } from "../helpers/constants";
@@ -15,6 +16,12 @@ import { LOGIN_FAIL, LOGIN_START } from "./actionType";
 export function startLogin() {
   return {
     type: LOGIN_START,
+  };
+}
+
+export function refreshError() {
+  return {
+    type: REFRESH_ERROR,
   };
 }
 
@@ -32,14 +39,14 @@ export function loginSuccess(user) {
   };
 }
 
-export function login(userName, password) {
+export function login(email, password) {
   return async (dispatch) => {
     dispatch(startLogin());
     const url = APIUrls.login();
     const response = await fetch(url, {
       method: "POST",
       headers: headerWithoutAuth,
-      body: getFormBody({ userName, password }),
+      body: getFormBody({ email, password }),
     });
     if (response.status === 404) {
       dispatch(loginFailed(response.status + " " + response.statusText));
@@ -77,14 +84,14 @@ export function signupSuccess(message) {
   };
 }
 
-export function signup(name, userName, password, confirmPassword) {
+export function signup(name, email, password, confirmPassword) {
   return async (dispatch) => {
     dispatch(startSignup());
     const url = APIUrls.signup();
     const response = await fetch(url, {
       method: "POST",
       headers: headerWithoutAuth,
-      body: getFormBody({ name, userName, password, confirmPassword }),
+      body: getFormBody({ name, email, password, confirmPassword }),
     });
     if (response.status === 404) {
       dispatch(signupFailed(response.status + " " + response.statusText));

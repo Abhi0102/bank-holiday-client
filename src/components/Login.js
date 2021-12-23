@@ -1,13 +1,22 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { connect } from "react-redux";
+import { login, refreshError } from "../actions/auth";
 
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    return () => {
+      props.dispatch(refreshError());
+    };
+  }, []);
+
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(email, password);
+    props.dispatch(login(email, password));
   }
   return (
     <div className="container margin-5-pct">
@@ -41,7 +50,9 @@ function Login(props) {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                {/* {error && <div className="text-danger">{error}</div>} */}
+                {props.auth.error && (
+                  <div className="text-danger">{props.auth.error}</div>
+                )}
                 <button
                   type="submit"
                   className="btn btn-info text-white"
@@ -58,4 +69,10 @@ function Login(props) {
   );
 }
 
-export default Login;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps)(Login);

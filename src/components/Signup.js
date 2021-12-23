@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
-import { signup } from "../actions/auth";
+import { signup, refreshError } from "../actions/auth";
 
 function Signup(props) {
   // State for userName and Passowrd
@@ -8,6 +9,12 @@ function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  useEffect(() => {
+    return () => {
+      props.dispatch(refreshError());
+    };
+  }, []);
 
   //   Handling Submit of Login Form
   function handleSubmit(e) {
