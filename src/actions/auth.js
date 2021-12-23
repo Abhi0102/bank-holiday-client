@@ -8,7 +8,7 @@ import {
   AUTHENTICATION_PROGRESS,
 } from "./actionType";
 import { APIUrls } from "../helpers/url";
-import { headerWithoutAuth, headerWithAuth } from "../helpers/costants";
+import { headerWithoutAuth, headerWithAuth } from "../helpers/constants";
 import { getFormBody } from "../helpers/utils";
 import { LOGIN_FAIL, LOGIN_START } from "./actionType";
 

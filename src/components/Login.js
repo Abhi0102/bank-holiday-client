@@ -10,11 +10,11 @@ function Login(props) {
     console.log(email, password);
   }
   return (
-    <div className="container">
+    <div className="container margin-5-pct">
       <div className="row">
         <div className="col-md-4 offset-4">
-          <div className="card">
-            <div className="card-header">Login</div>
+          <div className="card ">
+            <div className="card-header bg-info text-white">Login</div>
             <div className="card-body">
               <form className="container">
                 <div className="mb-3">
@@ -44,7 +44,7 @@ function Login(props) {
                 {/* {error && <div className="text-danger">{error}</div>} */}
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn btn-info text-white"
                   onClick={(e) => handleSubmit(e)}
                 >
                   Login
