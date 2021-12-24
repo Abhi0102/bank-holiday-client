@@ -27,13 +27,9 @@ function Dashboard2(props) {
       });
   }, []);
 
-  //   console.log(apiData);
-
   //   Handling Drop-down selection
 
   function handleChange(e) {
-    console.log(e.target.value);
-
     let today = new Date();
     let rangeDate1 = new Date();
 
@@ -67,8 +63,6 @@ function Dashboard2(props) {
       }
     });
 
-    console.log(newLi);
-
     setDisplayData(newLi);
 
     return;
@@ -86,7 +80,6 @@ function Dashboard2(props) {
     const date = Object.fromEntries(formData);
     const startDate = new Date(date.startDate);
     const endDate = new Date(date.endDate);
-    console.log(startDate, endDate);
 
     let newLi = apiData.filter((data) => {
       const newData = data.events.filter((event) => {
@@ -105,14 +98,9 @@ function Dashboard2(props) {
   }
 
   return (
-    <div className="container">
+    <div className="container margin-5-pct">
       <h3>Select the Date</h3>
-      <button className="btn btn-danger" onClick={(e) => handleLogOut(e)}>
-        Logout
-      </button>{" "}
-      <Link to="/dashboard1"> Dahhboard 1</Link>
-      <br />
-      <br />
+
       <select
         className="form-select"
         aria-label="Default select example"

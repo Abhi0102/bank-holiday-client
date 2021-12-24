@@ -20,7 +20,6 @@ function Dashboard(props) {
       .then((data) => {
         let li = [];
         for (let i in data) {
-          console.log(i);
           li = [...li, ...data[i]["events"]];
         }
         setApiData(li);
@@ -30,8 +29,6 @@ function Dashboard(props) {
 
   //   Handling Drop-down selection
   function handleChange(e) {
-    console.log(e.target.value);
-
     let today = new Date();
     let rangeDate1 = new Date();
 
@@ -76,7 +73,6 @@ function Dashboard(props) {
     const date = Object.fromEntries(formData);
     const startDate = new Date(date.startDate);
     const endDate = new Date(date.endDate);
-    console.log(startDate, endDate);
 
     let newList = apiData.filter((data) => {
       const holidayDate = new Date(data.date);
@@ -89,14 +85,9 @@ function Dashboard(props) {
   }
 
   return (
-    <div className="container">
+    <div className="container margin-5-pct">
       <h3>Select the Date</h3>
-      <button className="btn btn-danger" onClick={(e) => handleLogOut(e)}>
-        Logout
-      </button>{" "}
-      <Link to="/dashboard2"> Dahhboard 2</Link>
-      <br />
-      <br />
+
       <select
         className="form-select"
         aria-label="Default select example"

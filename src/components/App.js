@@ -8,6 +8,7 @@ import Dashboard from "./Dashboard";
 import PrivateRoute from "../helpers/PrivateRoute";
 import Home from "./Home";
 import Dashboard2 from "./Dashboard2";
+import Navbar from "./Navbar";
 
 class App extends Component {
   componentDidMount() {
@@ -22,32 +23,35 @@ class App extends Component {
   }
   render() {
     return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
+      <>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="*" element={<Home />}></Route>
 
-          <Route
-            path="/dashboard1"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
+            <Route
+              path="/dashboard1"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
 
-          <Route
-            path="/dashboard2"
-            element={
-              <PrivateRoute>
-                <Dashboard2 />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-        {/* <div className="App">
+            <Route
+              path="/dashboard2"
+              element={
+                <PrivateRoute>
+                  <Dashboard2 />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+          {/* <div className="App">
           <Home />
         </div> */}
-      </Router>
+        </Router>
+      </>
     );
   }
 }

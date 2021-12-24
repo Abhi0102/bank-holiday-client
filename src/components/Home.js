@@ -3,14 +3,16 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
+import Dashboard from "./Dashboard";
+import Dashboard2 from "./Dashboard2";
+import PrivateRoute from "../helpers/PrivateRoute";
 
 function Home(props) {
-  const [login, setLogin] = useState("login");
   const { authProgress, isLoggedIn } = props.auth;
   let navigate = useNavigate();
   let location = useLocation();
-  let from = location.state?.from?.pathname || "/dashboard";
+  let from = location.state?.from?.pathname || "/dashboard1";
   // location.state?.from?.pathname ||
 
   useEffect(() => {
@@ -24,29 +26,27 @@ function Home(props) {
       <span className="visually-hidden">Loading...</span>
     </div>
   ) : (
-    // authProgress || isLoggedIn ? (
-    //     <div className="spinner-border text-primary" role="status">
-    //       <span className="visually-hidden">Loading...</span>
-    //     </div>
-    //   ) :
     <>
-      <div className="container">
-        <button
-          className="btn btn-primary margin-5-pct"
-          onClick={() => setLogin("login")}
-        >
-          Login
-        </button>{" "}
-        &nbsp;
-        <button
-          className="btn btn-primary margin-5-pct"
-          onClick={() => setLogin("signup")}
-        >
-          Signup
-        </button>
-      </div>
-
-      {login === "login" ? <Login /> : <Signup />}
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+        <Route
+          path="/dashboard1"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/dashboard2"
+          element={
+            <PrivateRoute>
+              <Dashboard2 />
+            </PrivateRoute>
+          }
+        ></Route>
+      </Routes>
     </>
   );
 }
