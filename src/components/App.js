@@ -32,18 +32,18 @@ class App extends Component {
             <Route
               path="/dashboard1"
               element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
+                // <PrivateRoute>
+                <Dashboard />
+                // </PrivateRoute>
               }
             />
 
             <Route
               path="/dashboard2"
               element={
-                <PrivateRoute>
-                  <Dashboard2 />
-                </PrivateRoute>
+                // <PrivateRoute>
+                <Dashboard2 />
+                // </PrivateRoute>
               }
             />
           </Routes>
